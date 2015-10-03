@@ -1,15 +1,19 @@
-// App React Component - Represents the APP.
+// App React Component - Represents the App.
 App = React.createClass({
-  getExperiences() {
-    return [
-      { _id: 1, text: "This is experience 1" },
-      { _id: 2, text: "This is experience 2" },
-      { _id: 3, text: "This is experience 3" }
-    ];
+
+  // This mixin makes the getMeteorData method work.
+  mixins: [ReactMeteorData],
+
+  // Loads items from the Experiences collection and puts them on this.data.experiences
+  getMeteorData() {
+    return {
+      experiences: Experiences.find({}).fetch()
+    }
   },
 
   renderExperiences() {
-    return this.getExperiences().map((experience) => {
+    // Get experiences from this.data.experiences.
+    return this.data.experiences.map((experience) => {
       return <Experience key={experience._id} experience={experience} />;
     });
   },
@@ -18,7 +22,7 @@ App = React.createClass({
     return (
       <div className="container">
         <header>
-          <h1>Todo List</h1>
+          <h1>Experiences</h1>
         </header>
 
         <ul>
@@ -26,5 +30,5 @@ App = React.createClass({
         </ul>
       </div>
     );
-  }
+  },
 });

@@ -7,7 +7,7 @@ Experience = React.createClass({
   },
   render() {
     return (
-      <li>{this.props.experience.text}</li>
+      <li>{this.props.experience.title}</li>
     );
   }
 });
