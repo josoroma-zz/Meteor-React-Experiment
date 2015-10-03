@@ -17,7 +17,13 @@ cd experiences
 meteor add react
 ```
 
-Includes everything you need to get started using React in Meteor: the React library itself, automatic compilation of .jsx files, and a ReactMeteorData mixin for loading data.
+Includes everything we need to get started using React in Meteor:
+
+ - The React library itself.
+
+ - Automatic compilation of .jsx files.
+ 
+ - A ReactMeteorData mixin for loading data.
 
 ```
 rm experiences.js
