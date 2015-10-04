@@ -25,6 +25,7 @@ App = React.createClass({
     return {
       experiences: Experiences.find(query, {sort: {createdAt: -1}}).fetch(),
       incompleteCount: Experiences.find({checked: {$ne: true}}).count(),
+      currentUser: Meteor.user(),
     };
   },
 
@@ -50,7 +51,9 @@ App = React.createClass({
     // created, since we don't ever have to define a schema for the collection.
     Experiences.insert({
       title: title,
-      createdAt: new Date(),
+      createdAt: new Date(),             // current time.
+      owner: Meteor.userId(),            // _id of logged in user.
+      username: Meteor.user().username,  // username of logged in user.
     });
 
     // Clear form.
@@ -83,12 +86,16 @@ App = React.createClass({
             Hide Completed Experiences
           </label>
 
-          <form className="new-experience" onSubmit={this.handleSubmit} >
-            <input
-              type="text"
-              ref="titleInput"
-              placeholder="Type to add new experiences" />
-          </form>
+          <AccountsUIWrapper />
+
+          { this.data.currentUser ?
+            <form className="new-experience" onSubmit={this.handleSubmit} >
+              <input
+                type="text"
+                ref="titleInput"
+                placeholder="Type to add new experiences" />
+            </form> : ''
+          }
         </header>
 
         <ul>

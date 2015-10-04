@@ -36,7 +36,9 @@ Experience = React.createClass({
           checked={this.props.experience.checked}
           onClick={this.toggleChecked} />
 
-        <span className="title">{this.props.experience.title}</span>
+        <span className="title">
+          <strong>{this.props.experience.username}</strong>: {this.props.experience.title}
+        </span>
       </li>
     );
   }
