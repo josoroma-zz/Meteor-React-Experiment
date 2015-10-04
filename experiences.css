@@ -49,7 +49,7 @@ form {
   position: relative;
 }
 
-.new-task input {
+.new-experience input {
   box-sizing: border-box;
   padding: 10px 0;
   background: transparent;
@@ -59,7 +59,7 @@ form {
   font-size: 1em;
 }
 
-.new-task input:focus{
+.new-experience input:focus{
   outline: 0;
 }
 
@@ -85,7 +85,7 @@ li {
   border-bottom: #eee solid 1px;
 }
 
-li .text {
+li .title {
   margin-left: 10px;
 }
 
@@ -93,7 +93,7 @@ li.checked {
   color: #888;
 }
 
-li.checked .text {
+li.checked .title {
   text-decoration: line-through;
 }
 
@@ -120,7 +120,7 @@ header .hide-completed {
     clear: both;
   }
 
-  .new-task input {
+  .new-experience input {
     padding-bottom: 5px;
   }
 }
