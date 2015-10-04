@@ -8,15 +8,15 @@ Experience = React.createClass({
 
   toggleChecked() {
     // Set the checked property to the opposite of its current value
-    Experiences.update(this.props.experience._id, {
-      $set: {
-        checked: !this.props.experience.checked,
-      },
-    });
+    Meteor.call(
+      'setChecked',
+      this.props.experience._id,
+      !this.props.experience.checked
+    );
   },
 
   deleteThisExperience() {
-    Experiences.remove(this.props.experience._id);
+    Meteor.call('removeExperience', this.props.experience._id);
   },
 
   render() {

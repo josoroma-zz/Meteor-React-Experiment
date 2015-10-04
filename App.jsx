@@ -22,6 +22,7 @@ App = React.createClass({
       query = {checked: {$ne: true}};
     }
 
+    // We can also use Meteor.user().username or Meteor.userId() too.
     return {
       experiences: Experiences.find(query, {sort: {createdAt: -1}}).fetch(),
       incompleteCount: Experiences.find({checked: {$ne: true}}).count(),
@@ -46,15 +47,7 @@ App = React.createClass({
     // Find the title field via the React ref.
     var title = React.findDOMNode(this.refs.titleInput).value.trim();
 
-    // We add an item to the experiences collection.
-    // We can assign any properties to the experience object, such as the time
-    // created, since we don't ever have to define a schema for the collection.
-    Experiences.insert({
-      title: title,
-      createdAt: new Date(),             // current time.
-      owner: Meteor.userId(),            // _id of logged in user.
-      username: Meteor.user().username,  // username of logged in user.
-    });
+    Meteor.call('addExperience', title);
 
     // Clear form.
     React.findDOMNode(this.refs.titleInput).value = '';

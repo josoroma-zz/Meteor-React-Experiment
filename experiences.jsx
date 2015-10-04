@@ -17,3 +17,33 @@ if (Meteor.isClient) {
     React.render(<App />, document.getElementById('render-target'));
   });
 }
+
+// We need one method for each database operation we want to perform on the
+// client. Methods should be defined in code that is executed on the client
+// and the server.
+Meteor.methods({
+  addExperience(title) {
+    // Make sure the user is logged in before inserting a experience.
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    // We add an item to the experiences collection.
+    // We can assign any properties to the experience object, such as the time
+    // created, since we don't ever have to define a schema for the collection.
+    Experiences.insert({
+      title: title,
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username,
+    });
+  },
+
+  removeExperience(experienceId) {
+    Experiences.remove(experienceId);
+  },
+
+  setChecked(experienceId, setChecked) {
+    Experiences.update(experienceId, { $set: { checked: setChecked} });
+  },
+});
