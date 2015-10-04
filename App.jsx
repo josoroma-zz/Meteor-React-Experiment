@@ -4,12 +4,27 @@ App = React.createClass({
   // This mixin makes the getMeteorData method work.
   mixins: [ReactMeteorData],
 
-  // Loads items from the Experiences collection and puts them on
-  // this.data.experiences.
-  getMeteorData() {
+  // We define a getInitialState method to initialize fields or things.
+  getInitialState() {
     return {
-      // Sorting our experiences. We want to see the newest experiences first.
-      experiences: Experiences.find({}, {sort: {createdAt: -1}}).fetch(),
+      hideCompleted: false,
+    };
+  },
+
+  // Loads items from the Experiences collection and puts them on
+  // this.data.experiences and filter out completed experiences when
+  // this.state.hideCompleted is true.
+  getMeteorData() {
+    let query = {};
+
+    if (this.state.hideCompleted) {
+      // If hide completed is checked, filter experiences
+      query = {checked: {$ne: true}};
+    }
+
+    return {
+      experiences: Experiences.find(query, {sort: {createdAt: -1}}).fetch(),
+      incompleteCount: Experiences.find({checked: {$ne: true}}).count(),
     };
   },
 
@@ -39,14 +54,34 @@ App = React.createClass({
     });
 
     // Clear form.
-    React.findDOMNode(this.refs.titleInput).value = "";
+    React.findDOMNode(this.refs.titleInput).value = '';
   },
 
+  // An event handler that updates this.state by calling this.setState, which
+  // will update the state property asynchronously and then cause the
+  // component to re-render.
+  toggleHideCompleted() {
+    this.setState({
+      hideCompleted: !this.state.hideCompleted,
+    });
+  },
+
+  // Use React's Component State to store temporary information that is only
+  // used on the client.
   render() {
     return (
       <div className="container">
         <header>
-          <h1>Experiences</h1>
+          <h1>Experiences ({this.data.incompleteCount})</h1>
+
+          <label className="hide-completed">
+            <input
+              type="checkbox"
+              readOnly={true}
+              checked={this.state.hideCompleted}
+              onClick={this.toggleHideCompleted} />
+            Hide Completed Experiences
+          </label>
 
           <form className="new-experience" onSubmit={this.handleSubmit} >
             <input

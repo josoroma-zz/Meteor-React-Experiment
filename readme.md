@@ -48,3 +48,11 @@ db.experiences.insert({ title: "My Third Experience", createdAt: new Date() });
 ```
 meteor deploy experiences.meteor.com
 ```
+
+## Meteor work across different platforms
+
+```
+meteor install-sdk ios && meteor add-platform ios
+
+meteor run ios
+```
