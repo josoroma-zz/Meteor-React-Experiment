@@ -110,3 +110,48 @@ meteor remove autopublish
 ## Extra Security Checks
 
 The private experience feature add checks within deleteExperience and setChecked methods to make sure only the experience owner can delete or check off a private experience.
+
+## Structuring our Meteor React App
+
+```
+mkdir -p client/compatibility client/helpers server public/img public/js public/css private lib/collections tests
+```
+
+ - `client`, similar to wrapping your code in `if (Meteor.isClient) { ... }`.
+
+ - `server`, similar to wrapping your code in `if (Meteor.isServer) { ... }`.
+
+ - `public`, when referencing these assets, do not include public/ in the URL, for example: `<img src='/bg.png' />`. This is the best place for favicon.ico, robots.txt, and similar files.
+
+ - `private` are only accessible from `server` code and can be loaded via the Assets API. This can be used for private data files.
+
+ - `client/compatibility` is for compatibility JavaScript libraries that rely on variables declared with var at the top level being exported as globals. Files in this directory are executed without being wrapped in a new variable scope. These files are executed before other client-side JavaScript files.
+
+ - `tests` folder is not loaded anywhere. Used for any local test code.
+
+ - `node_modules` for compatibility with `node.js` tools used alongside Meteor, any directory named node_modules is not loaded anywhere. node.js packages installed into node_modules directories will not be available to our Meteor code. Use `Npm.depends` in your package package.js file for that.
+
+### Initial Structure
+
+```
+tree -d
+
+├── client
+│   ├── compatibility
+│   └── helpers
+├── lib
+│   └── collections
+├── private
+├── public
+│   ├── css
+│   ├── img
+│   └── js
+├── server
+└── tests
+```
+
+## What's next?
+
+ - Refactor.
+ - Routes & SEO.
+ - Places relation and google map screens.
