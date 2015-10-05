@@ -138,7 +138,8 @@ tree -d
 
 ├── client
 │   ├── compatibility
-│   └── helpers
+│   ├── helpers
+│   └── wrappers
 ├── lib
 │   └── collections
 ├── private
