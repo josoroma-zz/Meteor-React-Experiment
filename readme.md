@@ -114,7 +114,7 @@ The private experience feature add checks within deleteExperience and setChecked
 ## Structuring our Meteor React App
 
 ```
-mkdir -p client/compatibility client/helpers server public/img public/js public/css private lib/collections tests
+mkdir -p client/compatibility client/helpers client/wrappers server public/img public/js public/css private lib/collections tests
 ```
 
  - `client`, similar to wrapping your code in `if (Meteor.isClient) { ... }`.
