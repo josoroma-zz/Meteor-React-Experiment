@@ -1,6 +1,8 @@
 Meteor React Experiment
 =======================
 
+![If user is guest](public/img/experiences-out.png)
+
 ## Create a Meteor App
 
 ```
@@ -92,3 +94,19 @@ When we call a method on the client using `Meteor.call`, two things happen in pa
 What this means is that a newly created `experience` actually appears on the screen before the result comes back from the server.
 
 With `Meteor methods` and `Optimistic UI`, we get the best of both worlds — the security of server code and no round-trip delay.
+
+## Filtering data with publish and subscribe
+
+![If user logged in](public/img/experiences-in.png)
+
+We need a way of controlling which data Meteor sends to the client-side database. Just like with insecure in the last step, all new Meteor apps start with the `autopublish` package, which automatically synchronizes all of the database contents to the client.
+
+When the app refreshes, the experiences list will be empty. Without the `autopublish` package, we will have to specify explicitly what the server sends to the client.
+
+```
+meteor remove autopublish
+```
+
+Extra method security
+
+The private experience feature add checks within deleteExperience and setChecked methods to make sure only the experience owner can delete or check off a private experience.

@@ -31,9 +31,15 @@ App = React.createClass({
   },
 
   renderExperiences() {
-    // Get experiences from this.data.experiences.
+    // Get experiences from this.data.experiences
     return this.data.experiences.map((experience) => {
-      return <Experience key={experience._id} experience={experience} />;
+      const currentUserId = this.data.currentUser && this.data.currentUser._id;
+      const showPrivateButton = experience.owner === currentUserId;
+
+      return <Experience
+        key={experience._id}
+        experience={experience}
+        showPrivateButton={showPrivateButton} />;
     });
   },
 
