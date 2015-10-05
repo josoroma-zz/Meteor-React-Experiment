@@ -107,6 +107,6 @@ When the app refreshes, the experiences list will be empty. Without the `autopub
 meteor remove autopublish
 ```
 
-Extra method security
+## Extra Security Checks
 
 The private experience feature add checks within deleteExperience and setChecked methods to make sure only the experience owner can delete or check off a private experience.
