@@ -61,6 +61,8 @@ meteor run ios
 
 ## Accounts System and Login User Interface
 
+ - http://docs.meteor.com/#/full/accounts_api
+
 ```
 meteor add accounts-ui accounts-password
 ```
@@ -72,6 +74,12 @@ meteor add accounts-facebook
 
 meteor add accounts-twitter
 ```
+
+### UI - Pre-built Forms
+
+Pre-built forms for common methods like login, signup, password change, and password reset.
+
+ - http://docs.meteor.com/#/full/accountsui
 
 ## Remove the Insecure Package
 
@@ -185,7 +193,151 @@ tree
 ├── readme.md
 ├── server                                                       Meteor.isServer
 │   └── publications.js                                             Publications
+│   └── startup.js
 └── tests
+```
+
+```
+tree -d
+
+├── client
+│   ├── compatibility
+│   ├── config
+│   ├── helpers
+│   └── react
+│       ├── components
+│       └── wrappers
+├── lib
+│   └── collections
+├── private
+├── public
+│   ├── css
+│   ├── img
+│   └── js
+├── server
+└── tests
+```
+
+## "minimongo"
+
+The Mongo.Collection class is used to declare `Mongo collections` and to manipulate them. Thanks to `minimongo`, Meteor's client-side Mongo emulator, `Mongo.Collection` can be used from both Client and Server code.
+
+```
+meteor mongo
+
+db.experiences.find({}).pretty();
+
+db.experiences.insert({
+  "title" : "Remember the milk 1",
+  "createdAt" : new Date(),
+  "owner" : "WQ73QruW6K4akRxqS",
+  "username" : "josoroma",
+  "private" : true,
+  "checked" : false
+});
+
+db.experiences.insert({
+  "title" : "Remember the milk 2",
+  "createdAt" : new Date(),
+  "owner" : "WQ73QruW6K4akRxqS",
+  "username" : "josoroma",
+  "private" : true,
+  "checked" : false
+});
+
+db.experiences.insert({
+  "title" : "Remember the milk 3",
+  "createdAt" : new Date(),
+  "owner" : "WQ73QruW6K4akRxqS",
+  "username" : "josoroma",
+  "private" : true,
+  "checked" : false
+});
+
+db.experiences.find({}).limit(3).sort({_id:-1}).pretty();
+```
+
+### Fixing _id type
+
+```
+db.experiences.find().forEach(function(doc) {
+  var doc = db.experiences.findOne();
+  var title = doc.title;
+  var id = doc._id;
+  doc._id = ObjectId();
+  db.experiences.insert(doc);
+  db.experiences.remove({_id: id});
+})
+
+db.experiences.find({}).limit(3).sort({_id:-1}).pretty();
+```
+
+#### idGeneration type
+
+```
+Experiences = new Meteor.Collection("experiences", {idGeneration : 'MONGO'});
+
+Experiences = new Meteor.Collection("experiences", {idGeneration : ’STRING’});
+```
+
+#### Reactivity
+
+ - http://docs.meteor.com/#/full/reactivity
+
+Meteor embraces the concept of reactive programming. This means that we can write our code in a simple imperative style, and the result will be automatically recalculated whenever data changes that our code depends on.
+
+### (Server === Mongo && Client === minimongo)
+
+## Just Use The Browser Console
+
+We use `fetch()` on the cursor to transform the `reactive datasource` into an `array`.
+
+```
+Experiences.find().fetch();
+
+Experiences.insert({
+  "title" : "Please, remember the milk",
+  "createdAt" : new Date(),
+  "owner" : "WQ73QruW6K4akRxqS",
+  "username" : "josoroma",
+  "private" : true,
+  "checked" : false
+});
+```
+
+Each document set or collection is defined by a `publish` function on the server. The `publish` function runs each time a new client subscribes to a document set. The data in a document set can come from anywhere, but the common case is to `publish` a database query.
+
+Once `subscribed`, the client uses its Mongo Cache as a fast local database, dramatically simplifying client code. Reads never require a costly `round trip` to the server. And they're limited to the contents of the cache: a query for every document in a collection on a client will only return documents the server is publishing to that client.
+
+DDP is like "Rest for Websockets"
+=================================
+
+DDP (Distributed Data Protocol) is the stateful websocket protocol that Meteor uses to communicate between the client and the server. Meteor's latency-compensated distributed data framework:
+
+ - https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md
+
+ - https://www.meteor.com/ddp
+
+ - https://meteorhacks.com/introduction-to-ddp
+
+ - http://meteorpedia.com/read/DDP_Clients
+
+ - https://www.meteor.com/full-stack-db-drivers
+
+ - http://tagrudev.com/blog/what-is-ddp-and-why-should-i-care
+
+ - https://vimeo.com/52656246
+
+"DDP has a nice feature: it notifies the caller after all the write operations in the method have been reflected to all the other connected clients."
+
+"This is the core part of the DDP protocol. A client can use it to subscribe into a real-time data source and get notifications. The DDP protocol has three types of notification: `added`, `changed` and `removed`. Since the DDP protocol was inspired by MongoDB, each data notification (a JSON object) is assigned to a collection, which is the place where the data belongs."
+
+## Discover Meteor DDP in Realtime
+
+ - https://meteorhacks.com/discover-meteor-ddp-in-realtime
+
+```
+npm install -g ddp-analyzer
 ```
 
 ## What's next?
