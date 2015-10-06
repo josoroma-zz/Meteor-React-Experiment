@@ -340,6 +340,41 @@ DDP (Distributed Data Protocol) is the stateful websocket protocol that Meteor u
 npm install -g ddp-analyzer
 ```
 
+## Install Flow Router and React Layout
+
+ - https://github.com/kadirahq/flow-router
+
+ - https://github.com/kadirahq/meteor-react-layout
+
+ - https://kadira.io/academy/meteor-routing-guide/content/introduction-to-flow-router
+
+It is focused only on routing for client-side apps and does not handle rendering itself.
+
+It exposes a great API for changing the URL and reactively getting data from the URL. However, inside the router, `it's not reactive`. Most importantly, FlowRouter is designed with performance in mind and it focuses on what it does best: routing.
+
+```
+meteor add kadira:flow-router
+
+meteor add kadira:react-layout
+```
+
+In Chrome Console run:
+
+```
+FlowRouter.go('/test/1/1/?foo=bar');
+
+params:        Object {category: "1", itemId: "1"}
+queryParams:   Object {foo: "bar"}
+```
+
+```
+chrome http://localhost:3000/test/2/2/?bar=foo
+
+params:        Object {category: "2", itemId: "2"}
+queryParams:   Object {bar: "foo"}
+```
+
+
 ## What's next?
 
  - Refactor.
