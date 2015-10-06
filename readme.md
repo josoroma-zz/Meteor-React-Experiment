@@ -344,13 +344,17 @@ npm install -g ddp-analyzer
 
  - https://github.com/kadirahq/flow-router
 
- - https://github.com/kadirahq/meteor-react-layout
-
- - https://kadira.io/academy/meteor-routing-guide/content/introduction-to-flow-router
-
-It is focused only on routing for client-side apps and does not handle rendering itself.
+Flow Router is focused only on routing for client-side apps and does not handle rendering itself.
 
 It exposes a great API for changing the URL and reactively getting data from the URL. However, inside the router, `it's not reactive`. Most importantly, FlowRouter is designed with performance in mind and it focuses on what it does best: routing.
+
+- https://github.com/kadirahq/meteor-react-layout
+
+With `React Layout` we can easily render react components both alike in client and server.
+
+Worth a read:
+
+ - https://kadira.io/academy/meteor-routing-guide/content/introduction-to-flow-router
 
 ```
 meteor add kadira:flow-router
