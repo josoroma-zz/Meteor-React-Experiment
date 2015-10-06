@@ -1,4 +1,5 @@
 .meteor
+tests
 
 # Mac
 .DS_Store

@@ -151,8 +151,45 @@ tree -d
 └── tests
 ```
 
+### Meteor React Components Structure
+
+```
+tree
+
+├── client                                                       Meteor.isClient
+│   ├── compatibility
+│   ├── config
+│   │   └── accounts.ui.js
+│   ├── helpers
+│   ├── react                                                   React Components
+│   │   ├── Main.jsx
+│   │   ├── components
+│   │   │   ├── App.jsx
+│   │   │   └── Experience.jsx
+│   │   └── wrappers
+│   │       └── AccountsUIWrapper.jsx
+│   ├── startup.js
+│   └── subscriptions.js                                           Subscriptions
+├── experiences.css
+├── experiences.html
+├── lib                                       Meteor.isClient || Meteor.isServer
+│   └── collections
+│       └── experiences.js
+├── private
+├── public
+│   ├── css
+│   ├── img
+│   │   ├── experiences-in.png
+│   │   └── experiences-out.png
+│   └── js
+├── readme.md
+├── server                                                       Meteor.isServer
+│   └── publications.js                                             Publications
+└── tests
+```
+
 ## What's next?
 
  - Refactor.
  - Routes & SEO.
- - Places relation and google map screens.
+ - Places relation and Google Maps Integration - Places Screens.
